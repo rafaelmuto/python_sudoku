@@ -211,4 +211,27 @@ if mode == 1:
 else:
     flag = 1
     while flag == 1:
-        print('1. run matrix scan routine   2.)
+        print('1. run matrix scan routine   2.')
+        mode2 = int(input())
+        if mode2 == 1:
+            for xi in range(9):
+                for yi in range(9):
+                    print('=======> scannig coord:', xi, yi, 'field value:', sudoku[xi][yi])
+                    if sudoku[xi][yi] == 0:
+                        sol = scanSQ(sudoku, sol, xi, yi)
+                        sol = scanXY(sudoku, sol, xi, yi)
+                    else:
+                        print('>>> field skipped...')
+
+            scansolMatrix(sudoku, sol)
+            print('=================INTERATION END======================')
+            printMatrix(sudoku)
+            print('===================solMatrix=========================')
+            printMatrix(sol)
+            print('=====================================================')
+            solold = sol
+            if scanEND(sudoku) == True:
+                print('its DONE!')
+                flag = 0
+        if mode2 == 2:
+            print('mode2 2?')
