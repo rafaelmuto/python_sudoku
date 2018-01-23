@@ -171,38 +171,44 @@ print('=======================================')
 print('Select mode:')
 print('1. auto')
 print('2. debug')
+mode = int(input())
 
+if mode == 1:
+    flag = 1
+    inter = 0
+    stopFlag = 0
+    while flag == 1:
+        for xi in range(9):
+            for yi in range(9):
+                print('=======> scannig coord:', xi, yi, 'field value:', sudoku[xi][yi])
+                if sudoku[xi][yi] == 0:
+                    sol = scanSQ(sudoku, sol, xi, yi)
+                    sol = scanXY(sudoku, sol, xi, yi)
+                else:
+                    print('>>> field skipped...')
 
-flag = 1
-inter = 0
-stopFlag = 0
-while flag == 1:
-    for xi in range(9):
-        for yi in range(9):
-            print('=======> scannig coord:', xi, yi, 'field value:', sudoku[xi][yi])
-            if sudoku[xi][yi] == 0:
-                sol = scanSQ(sudoku, sol, xi, yi)
-                sol = scanXY(sudoku, sol, xi, yi)
-            else:
-                print('>>> field skipped...')
+        scansolMatrix(sudoku, sol)
+        print('=================INTERATION END======================')
+        printMatrix(sudoku)
+        print('===================solMatrix=========================')
+        printMatrix(sol)
+        print('=====================================================')
+        inter = inter + 1
+        print('Interation:', inter)
+        solold = sol
+        if scanEND(sudoku) == True:
+            print('its DONE!')
+            flag = 0
+        else:
+            if solold == sol:
+                stopFlag = stopFlag + 1
+                if stopFlag >= 100:
+                    print('This sudoku is open')
+                    flag = 0
+                else:
+                    flag = 1  # int(input('enter 1 to continue...'))
 
-    scansolMatrix(sudoku, sol)
-    print('=================INTERATION END======================')
-    printMatrix(sudoku)
-    print('===================solMatrix=========================')
-    printMatrix(sol)
-    print('=====================================================')
-    inter = inter + 1
-    print('Interation:', inter)
-    solold = sol
-    if scanEND(sudoku) == True:
-        print('its DONE!')
-        flag = 0
-    else:
-        if solold == sol:
-            stopFlag = stopFlag + 1
-            if stopFlag >= 100:
-                print('This sudoku is open')
-                flag = 0
-            else:
-                flag = 1  # int(input('enter 1 to continue...'))
+else:
+    flag = 1
+    while flag == 1:
+        print('1. run matrix scan routine   2.)
